@@ -7,226 +7,50 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --bg: #0f0f13;
-  --card: #1a1a24;
-  --card-hover: #22222e;
-  --border: #2a2a3a;
-  --text: #e8e8f0;
-  --text-dim: #8888a0;
-  --accent: #6c5ce7;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(108,92,231,0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(0,206,201,0.06) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(253,121,168,0.04) 0%, transparent 50%);
-  animation: bgDrift 20s ease-in-out infinite;
-  pointer-events: none; z-index: 0;
-}
-
-@keyframes bgDrift {
-  0%, 100% { transform: translate(0, 0); }
-  33% { transform: translate(-2%, 1%); }
-  66% { transform: translate(1%, -2%); }
-}
-
-.header {
-  text-align: center;
-  padding: 3rem 1.5rem 1.5rem;
-  position: relative; z-index: 1;
-}
-
-.header h1 {
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  font-weight: 800;
-  background: linear-gradient(135deg, #a29bfe, #6c5ce7, #00cec9, #55efc4);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradShift 6s ease infinite;
-  letter-spacing: -0.02em;
-}
-
-@keyframes gradShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.header p { color: var(--text-dim); font-size: 0.95rem; margin-top: 0.5rem; }
-
-.header .subtitle-line {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: rgba(108,92,231,0.1);
-  border: 1px solid rgba(108,92,231,0.2);
-  border-radius: 100px; padding: 0.4rem 1.2rem;
-  font-size: 0.8rem; color: var(--accent); margin-top: 1rem;
-}
-
-.search-wrap {
-  max-width: 500px; margin: 1.5rem auto; padding: 0 1.5rem;
-  position: relative; z-index: 1;
-}
-
-.search-wrap input {
-  width: 100%;
-  padding: 0.85rem 1.2rem 0.85rem 3rem;
-  border-radius: 14px; border: 1px solid var(--border);
-  background: var(--card); color: var(--text);
-  font-size: 0.95rem; font-family: inherit; outline: none;
-  transition: all 0.3s;
-}
-
-.search-wrap input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(108,92,231,0.15);
-}
-
-.search-wrap input::placeholder { color: var(--text-dim); }
-
-.search-wrap .search-icon {
-  position: absolute; left: 2.5rem; top: 50%;
-  transform: translateY(-50%); color: var(--text-dim);
-  font-size: 1.1rem; pointer-events: none;
-}
-
-.main {
-  max-width: 1200px; margin: 0 auto;
-  padding: 0 1.5rem 4rem; position: relative; z-index: 1;
-}
-
-.section { margin-bottom: 2.5rem; }
-
-.section-title {
-  display: flex; align-items: center; gap: 0.6rem;
-  margin-bottom: 1rem; font-size: 0.85rem; font-weight: 600;
-  color: var(--text-dim); text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.section-title::after {
-  content: ''; flex: 1; height: 1px; background: var(--border);
-}
-
-.section-title .icon { font-size: 1.1rem; }
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 0.8rem;
-}
-
-.card {
-  display: flex; align-items: center; gap: 0.9rem;
-  padding: 0.9rem 1rem;
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 14px; text-decoration: none; color: inherit;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer; position: relative; overflow: hidden;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(108,92,231,0.3);
-  background: var(--card-hover);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-}
-
-.card-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem; flex-shrink: 0; position: relative; z-index: 1;
-}
-
-.card-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
-
-.card-info h3 {
-  font-size: 0.92rem; font-weight: 600;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-
-.card-info p {
-  font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-
-.card-arrow {
-  color: var(--text-dim); font-size: 1.1rem; opacity: 0;
-  transform: translateX(-4px); transition: all 0.3s;
-  position: relative; z-index: 1;
-}
-
-.card:hover .card-arrow { opacity: 1; transform: translateX(0); }
-
-.card.g1 .card-icon { background: linear-gradient(135deg, rgba(108,92,231,0.2), rgba(162,155,254,0.1)); }
-.card.g2 .card-icon { background: linear-gradient(135deg, rgba(0,206,201,0.2), rgba(85,239,196,0.1)); }
-.card.g3 .card-icon { background: linear-gradient(135deg, rgba(253,121,168,0.2), rgba(232,67,147,0.1)); }
-.card.g4 .card-icon { background: linear-gradient(135deg, rgba(253,203,110,0.2), rgba(243,156,18,0.1)); }
-.card.g5 .card-icon { background: linear-gradient(135deg, rgba(0,184,148,0.2), rgba(0,206,201,0.1)); }
-.card.g6 .card-icon { background: linear-gradient(135deg, rgba(225,112,85,0.2), rgba(214,48,49,0.1)); }
-.card.g7 .card-icon { background: linear-gradient(135deg, rgba(116,185,255,0.2), rgba(9,132,227,0.1)); }
-.card.g8 .card-icon { background: linear-gradient(135deg, rgba(162,155,254,0.2), rgba(108,92,231,0.1)); }
-
-.card.g1:hover { border-color: rgba(108,92,231,0.4); }
-.card.g2:hover { border-color: rgba(0,206,201,0.4); }
-.card.g3:hover { border-color: rgba(253,121,168,0.4); }
-.card.g4:hover { border-color: rgba(253,203,110,0.4); }
-.card.g5:hover { border-color: rgba(0,184,148,0.4); }
-.card.g6:hover { border-color: rgba(225,112,85,0.4); }
-.card.g7:hover { border-color: rgba(116,185,255,0.4); }
-.card.g8:hover { border-color: rgba(162,155,254,0.4); }
-
-.footer {
-  text-align: center; padding: 2rem 1.5rem;
-  color: var(--text-dim); font-size: 0.78rem;
-  position: relative; z-index: 1;
-}
-
-@media (max-width: 600px) {
-  .cards { grid-template-columns: 1fr; }
-  .header { padding: 2rem 1rem 1rem; }
-  .main { padding: 0 1rem 3rem; }
-}
-
-.card { animation: fadeUp 0.5s ease both; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.cards .card:nth-child(1) { animation-delay: 0.02s; }
-.cards .card:nth-child(2) { animation-delay: 0.04s; }
-.cards .card:nth-child(3) { animation-delay: 0.06s; }
-.cards .card:nth-child(4) { animation-delay: 0.08s; }
-.cards .card:nth-child(5) { animation-delay: 0.10s; }
-.cards .card:nth-child(6) { animation-delay: 0.12s; }
-.cards .card:nth-child(7) { animation-delay: 0.14s; }
-.cards .card:nth-child(8) { animation-delay: 0.16s; }
-
-.card.hidden { display: none; }
-
-.clock {
-  font-variant-numeric: tabular-nums;
-  color: var(--text-dim); font-size: 0.82rem; margin-top: 0.6rem;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f0f13;--card:#1a1a24;--card-hover:#22222e;--border:#2a2a3a;--text:#e8e8f0;--text-dim:#8888a0;--accent:#6c5ce7}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 20% 30%,rgba(108,92,231,.08) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(0,206,201,.06) 0%,transparent 50%),radial-gradient(circle at 50% 50%,rgba(253,121,168,.04) 0%,transparent 50%);animation:bgDrift 20s ease-in-out infinite;pointer-events:none;z-index:0}
+@keyframes bgDrift{0%,100%{transform:translate(0,0)}33%{transform:translate(-2%,1%)}66%{transform:translate(1%,-2%)}}
+.header{text-align:center;padding:3rem 1.5rem 1.5rem;position:relative;z-index:1}
+.header h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;background:linear-gradient(135deg,#a29bfe,#6c5ce7,#00cec9,#55efc4);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradShift 6s ease infinite;letter-spacing:-.02em}
+@keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.header p{color:var(--text-dim);font-size:.95rem;margin-top:.5rem}
+.header .subtitle-line{display:inline-flex;align-items:center;gap:.5rem;background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);border-radius:100px;padding:.4rem 1.2rem;font-size:.8rem;color:var(--accent);margin-top:1rem}
+.search-wrap{max-width:500px;margin:1.5rem auto;padding:0 1.5rem;position:relative;z-index:1}
+.search-wrap input{width:100%;padding:.85rem 1.2rem .85rem 3rem;border-radius:14px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.95rem;font-family:inherit;outline:none;transition:all .3s}
+.search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,92,231,.15)}
+.search-wrap input::placeholder{color:var(--text-dim)}
+.search-wrap .search-icon{position:absolute;left:2.5rem;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:1.1rem;pointer-events:none}
+.main{max-width:1200px;margin:0 auto;padding:0 1.5rem 4rem;position:relative;z-index:1}
+.section{margin-bottom:2.5rem}
+.section-title{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;font-size:.85rem;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.section-title .icon{font-size:1.1rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.8rem}
+.card{display:flex;align-items:center;gap:.9rem;padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:14px;text-decoration:none;color:inherit;transition:all .25s cubic-bezier(.4,0,.2,1);cursor:pointer;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-2px);border-color:rgba(108,92,231,.3);background:var(--card-hover);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;position:relative;z-index:1}
+.card-info{flex:1;min-width:0;position:relative;z-index:1}
+.card-info h3{font-size:.92rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-info p{font-size:.75rem;color:var(--text-dim);margin-top:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-arrow{color:var(--text-dim);font-size:1.1rem;opacity:0;transform:translateX(-4px);transition:all .3s;position:relative;z-index:1}
+.card:hover .card-arrow{opacity:1;transform:translateX(0)}
+.card.g1 .card-icon{background:linear-gradient(135deg,rgba(108,92,231,.2),rgba(162,155,254,.1))}
+.card.g2 .card-icon{background:linear-gradient(135deg,rgba(0,206,201,.2),rgba(85,239,196,.1))}
+.card.g3 .card-icon{background:linear-gradient(135deg,rgba(253,121,168,.2),rgba(232,67,147,.1))}
+.card.g4 .card-icon{background:linear-gradient(135deg,rgba(253,203,110,.2),rgba(243,156,18,.1))}
+.card.g5 .card-icon{background:linear-gradient(135deg,rgba(0,184,148,.2),rgba(0,206,201,.1))}
+.card.g6 .card-icon{background:linear-gradient(135deg,rgba(225,112,85,.2),rgba(214,48,49,.1))}
+.card.g7 .card-icon{background:linear-gradient(135deg,rgba(116,185,255,.2),rgba(9,132,227,.1))}
+.card.g8 .card-icon{background:linear-gradient(135deg,rgba(162,155,254,.2),rgba(108,92,231,.1))}
+.card.g1:hover{border-color:rgba(108,92,231,.4)}.card.g2:hover{border-color:rgba(0,206,201,.4)}.card.g3:hover{border-color:rgba(253,121,168,.4)}.card.g4:hover{border-color:rgba(253,203,110,.4)}.card.g5:hover{border-color:rgba(0,184,148,.4)}.card.g6:hover{border-color:rgba(225,112,85,.4)}.card.g7:hover{border-color:rgba(116,185,255,.4)}.card.g8:hover{border-color:rgba(162,155,254,.4)}
+.footer{text-align:center;padding:2rem 1.5rem;color:var(--text-dim);font-size:.78rem;position:relative;z-index:1}
+@media(max-width:600px){.cards{grid-template-columns:1fr}.header{padding:2rem 1rem 1rem}.main{padding:0 1rem 3rem}}
+.card{animation:fadeUp .5s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.card.hidden{display:none}
+.clock{font-variant-numeric:tabular-nums;color:var(--text-dim);font-size:.82rem;margin-top:.6rem}
 </style>
 </head>
 <body>
@@ -234,10 +58,7 @@ body::before {
 <div class="header">
   <h1>🧭 我的导航</h1>
   <p>常用网站一键直达</p>
-  <div class="subtitle-line">
-    <span>⚡</span>
-    <span>共 46 个站点 · 收藏备用</span>
-  </div>
+  <div class="subtitle-line"><span>⚡</span><span>共 51 个站点 · 收藏备用</span></div>
   <div class="clock" id="clock"></div>
 </div>
 
@@ -252,231 +73,71 @@ body::before {
   <div class="section">
     <div class="section-title"><span class="icon">🤖</span>AI 工具</div>
     <div class="cards">
-      <a class="card g1" href="https://chat.deepseek.com/" target="_blank" rel="noopener">
-        <div class="card-icon">🔮</div>
-        <div class="card-info"><h3>DeepSeek</h3><p>国产大模型 · 深度推理</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://www.kimi.com/" target="_blank" rel="noopener">
-        <div class="card-icon">🌙</div>
-        <div class="card-info"><h3>Kimi</h3><p>月之暗面 · 长文本对话</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://www.doubao.com/" target="_blank" rel="noopener">
-        <div class="card-icon">🫘</div>
-        <div class="card-info"><h3>豆包 AI</h3><p>字节跳动 · 智能助手</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g4" href="https://chat.moshuai.cc/?type=1" target="_blank" rel="noopener">
-        <div class="card-icon">🎯</div>
-        <div class="card-info"><h3>Chat Hi</h3><p>多模型聚合对话平台</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g5" href="https://www.tboxn.com/sites/2436.html" target="_blank" rel="noopener">
-        <div class="card-icon">💬</div>
-        <div class="card-info"><h3>ChatGPT 镜像版</h3><p>OpenAI ChatGPT 国内镜像</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g6" href="https://www.tboxn.com/sites/2865.html" target="_blank" rel="noopener">
-        <div class="card-icon">✦</div>
-        <div class="card-info"><h3>Gemini</h3><p>Google Gemini AI 助手</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g1" href="https://www.tboxn.com/sites/2973.html" target="_blank" rel="noopener">
-        <div class="card-icon">🚀</div>
-        <div class="card-info"><h3>Grok AI</h3><p>马斯克 xAI · Grok 大模型</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://openi.cn/" target="_blank" rel="noopener">
-        <div class="card-icon">🌐</div>
-        <div class="card-info"><h3>OpenAI 官网</h3><p>OpenAI 官方网站入口</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://www.tboxn.com/sites/3773.html" target="_blank" rel="noopener">
-        <div class="card-icon">🐾</div>
-        <div class="card-info"><h3>OpenClaw</h3><p>OpenClaw AI 平台</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g4" href="https://imgtoformula.com/" target="_blank" rel="noopener">
-        <div class="card-icon">📐</div>
-        <div class="card-info"><h3>Miss Formula · 罗马公式</h3><p>图片转 LaTeX 公式工具</p></div>
-        <span class="card-arrow">→</span>
-      </a>
+      <a class="card g1" href="https://chat.deepseek.com/" target="_blank" rel="noopener"><div class="card-icon">🔮</div><div class="card-info"><h3>DeepSeek</h3><p>国产大模型 · 深度推理</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://www.kimi.com/" target="_blank" rel="noopener"><div class="card-icon">🌙</div><div class="card-info"><h3>Kimi</h3><p>月之暗面 · 长文本对话</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://www.doubao.com/" target="_blank" rel="noopener"><div class="card-icon">🫘</div><div class="card-info"><h3>豆包 AI</h3><p>字节跳动 · 智能助手</p></div><span class="card-arrow">→</span></a>
+      <a class="card g4" href="https://chat.moshuai.cc/?type=1" target="_blank" rel="noopener"><div class="card-icon">🎯</div><div class="card-info"><h3>Chat Hi</h3><p>多模型聚合对话平台</p></div><span class="card-arrow">→</span></a>
+      <a class="card g5" href="https://www.tboxn.com/sites/2436.html" target="_blank" rel="noopener"><div class="card-icon">💬</div><div class="card-info"><h3>ChatGPT 镜像版</h3><p>OpenAI ChatGPT 国内镜像</p></div><span class="card-arrow">→</span></a>
+      <a class="card g6" href="https://www.tboxn.com/sites/2865.html" target="_blank" rel="noopener"><div class="card-icon">✦</div><div class="card-info"><h3>Gemini</h3><p>Google Gemini AI 助手</p></div><span class="card-arrow">→</span></a>
+      <a class="card g1" href="https://www.tboxn.com/sites/2973.html" target="_blank" rel="noopener"><div class="card-icon">🚀</div><div class="card-info"><h3>Grok AI</h3><p>马斯克 xAI · Grok 大模型</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://openi.cn/" target="_blank" rel="noopener"><div class="card-icon">🌐</div><div class="card-info"><h3>OpenAI 官网</h3><p>OpenAI 官方网站入口</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://www.tboxn.com/sites/3773.html" target="_blank" rel="noopener"><div class="card-icon">🐾</div><div class="card-info"><h3>OpenClaw</h3><p>OpenClaw AI 平台</p></div><span class="card-arrow">→</span></a>
     </div>
   </div>
 
-  <!-- ===== 2. 翻译 & 语言 ===== -->
-  <div class="section">
-    <div class="section-title"><span class="icon">🔤</span>翻译 · 语言</div>
-    <div class="cards">
-      <a class="card g7" href="https://www.deepl.com/zh/translator" target="_blank" rel="noopener">
-        <div class="card-icon">🌍</div>
-        <div class="card-info"><h3>DeepL 翻译</h3><p>全球最精准的 AI 翻译器</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g8" href="https://dict.cnki.net/" target="_blank" rel="noopener">
-        <div class="card-icon">📖</div>
-        <div class="card-info"><h3>CNKI 翻译助手</h3><p>学术文献专业翻译工具</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- ===== 3. 学术资源 ===== -->
-  <div class="section">
-    <div class="section-title"><span class="icon">📚</span>学术资源</div>
-    <div class="cards">
-      <a class="card g1" href="https://www.cnki.net/" target="_blank" rel="noopener">
-        <div class="card-icon">📘</div>
-        <div class="card-info"><h3>中国知网 · CNKI</h3><p>中文学术文献检索与下载</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://x.cnki.net/web/psmc/#/home" target="_blank" rel="noopener">
-        <div class="card-icon">🔬</div>
-        <div class="card-info"><h3>知网研学</h3><p>文献阅读 · 笔记 · 知识管理</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://scholar.chongbuluo.com/" target="_blank" rel="noopener">
-        <div class="card-icon">🔎</div>
-        <div class="card-info"><h3>学术搜索 · 虫部落</h3><p>聚合 Google Scholar 等引擎</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g4" href="https://tradesou.99lb.net/" target="_blank" rel="noopener">
-        <div class="card-icon">🧪</div>
-        <div class="card-info"><h3>谷粉学术</h3><p>Google 学术镜像导航</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g5" href="http://459.org/" target="_blank" rel="noopener">
-        <div class="card-icon">📄</div>
-        <div class="card-info"><h3>文献部落</h3><p>文献下载聚合导航</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g6" href="https://www.aminer.cn/" target="_blank" rel="noopener">
-        <div class="card-icon">🧠</div>
-        <div class="card-info"><h3>AMiner</h3><p>AI 学术搜索 · 学者画像</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g7" href="https://sso.hnlat.com/login?service=https%3A%2F%2Fspis.hnlat.com%2FloginCenter%3Fsourceurl%3Dhttps%253A%252F%252Fspis.hnlat.com%252F" target="_blank" rel="noopener">
-        <div class="card-icon">📊</div>
-        <div class="card-info"><h3>维度学术</h3><p>学术期刊投稿与检索</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g8" href="https://www.scihub.net.cn/" target="_blank" rel="noopener">
-        <div class="card-icon">🔓</div>
-        <div class="card-info"><h3>SCI 学术</h3><p>SCI 论文检索与下载</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g1" href="https://www.yanweb.top/" target="_blank" rel="noopener">
-        <div class="card-icon">💻</div>
-        <div class="card-info"><h3>科研废物网</h3><p>科研工具与资源聚合</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://www.letpub.com.cn/" target="_blank" rel="noopener">
-        <div class="card-icon">📝</div>
-        <div class="card-info"><h3>LetPub</h3><p>SCI 论文编辑 · 期刊投稿</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://z-lib.ggonav.com/" target="_blank" rel="noopener">
-        <div class="card-icon">📥</div>
-        <div class="card-info"><h3>Z-Library 国内镜像</h3><p>全球免费电子书图书馆</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g4" href="https://www.giffox.com/" target="_blank" rel="noopener">
-        <div class="card-icon">🦊</div>
-        <div class="card-info"><h3>Giffox 电子书搜索</h3><p>多源电子书搜索引擎</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g5" href="https://saduck.top" target="_blank" rel="noopener">
-        <div class="card-icon">🦆</div>
-        <div class="card-info"><h3>SaDuck · 公考知识库</h3><p>公务员考试备考资料</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- ===== 4. 社交 & 社区 ===== -->
-  <div class="section">
-    <div class="section-title"><span class="icon">🌐</span>社交 · 社区</div>
-    <div class="cards">
-      <a class="card g1" href="https://weibo.com/" target="_blank" rel="noopener">
-        <div class="card-icon">🔴</div>
-        <div class="card-info"><h3>微博</h3><p>中国最大社交媒体平台</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://www.zhihu.com/" target="_blank" rel="noopener">
-        <div class="card-icon">💡</div>
-        <div class="card-info"><h3>知乎</h3><p>中文问答社区 · 知识分享</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://www.bilibili.com/" target="_blank" rel="noopener">
-        <div class="card-icon">📺</div>
-        <div class="card-info"><h3>Bilibili · B站</h3><p>国内最大弹幕视频平台</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g4" href="https://www.xiaohongshu.com/" target="_blank" rel="noopener">
-        <div class="card-icon">📕</div>
-        <div class="card-info"><h3>小红书</h3><p>生活方式分享社区</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- ===== 5. 娱乐 & 影视 ===== -->
+  <!-- ===== 2. 娱乐 & 影视 ===== -->
   <div class="section">
     <div class="section-title"><span class="icon">🎬</span>娱乐 · 影视 · 直播</div>
     <div class="cards">
-      <a class="card g1" href="https://designshidai.com/26417.html" target="_blank" rel="noopener">
-        <div class="card-icon">🎥</div>
-        <div class="card-info"><h3>好剧屋 · 影视</h3><p>在线影视资源观看</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://9eip.com/ys" target="_blank" rel="noopener">
-        <div class="card-icon">🎞️</div>
-        <div class="card-info"><h3>影视资源合集</h3><p>热门影视资源导航聚合</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://www.czzytv77.com/" target="_blank" rel="noopener">
-        <div class="card-icon">🍿</div>
-        <div class="card-info"><h3>厂长资源 · 破解影视</h3><p>免费影视资源在线观看</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g4" href="https://www.naifeiyingshi.com/" target="_blank" rel="noopener">
-        <div class="card-icon">🌐</div>
-        <div class="card-info"><h3>奈飞观影</h3><p>Netflix 资源在线观看</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g5" href="https://www.tboxn.com/sites/265.html" target="_blank" rel="noopener">
-        <div class="card-icon">📡</div>
-        <div class="card-info"><h3>央视直播</h3><p>CCTV 电视直播在线观看</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g6" href="https://www.huya.com/" target="_blank" rel="noopener">
-        <div class="card-icon">🐯</div>
-        <div class="card-info"><h3>虎牙直播</h3><p>游戏 · 娱乐直播平台</p></div>
-        <span class="card-arrow">→</span>
-      </a>
+      <a class="card g1" href="https://designshidai.com/26417.html" target="_blank" rel="noopener"><div class="card-icon">🎥</div><div class="card-info"><h3>好剧屋 · 影视</h3><p>在线影视资源观看</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://9eip.com/ys" target="_blank" rel="noopener"><div class="card-icon">🎞️</div><div class="card-info"><h3>影视资源合集</h3><p>热门影视资源导航聚合</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://www.czzytv77.com/" target="_blank" rel="noopener"><div class="card-icon">🍿</div><div class="card-info"><h3>厂长资源 · 破解影视</h3><p>免费影视资源在线观看</p></div><span class="card-arrow">→</span></a>
+      <a class="card g4" href="https://www.naifeiyingshi.com/" target="_blank" rel="noopener"><div class="card-icon">🌐</div><div class="card-info"><h3>奈飞观影</h3><p>Netflix 资源在线观看</p></div><span class="card-arrow">→</span></a>
+      <a class="card g5" href="https://www.tboxn.com/sites/265.html" target="_blank" rel="noopener"><div class="card-icon">📡</div><div class="card-info"><h3>央视直播</h3><p>CCTV 电视直播在线观看</p></div><span class="card-arrow">→</span></a>
+      <a class="card g6" href="https://www.huya.com/" target="_blank" rel="noopener"><div class="card-icon">🐯</div><div class="card-info"><h3>虎牙直播</h3><p>游戏 · 娱乐直播平台</p></div><span class="card-arrow">→</span></a>
     </div>
   </div>
 
-  <!-- ===== 6. 公众号 & 内容创作 ===== -->
+  <!-- ===== 3. 社交 & 社区 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🌐</span>社交 · 社区</div>
+    <div class="cards">
+      <a class="card g1" href="https://weibo.com/" target="_blank" rel="noopener"><div class="card-icon">🔴</div><div class="card-info"><h3>微博</h3><p>中国最大社交媒体平台</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://www.zhihu.com/" target="_blank" rel="noopener"><div class="card-icon">💡</div><div class="card-info"><h3>知乎</h3><p>中文问答社区 · 知识分享</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://www.bilibili.com/" target="_blank" rel="noopener"><div class="card-icon">📺</div><div class="card-info"><h3>Bilibili · B站</h3><p>国内最大弹幕视频平台</p></div><span class="card-arrow">→</span></a>
+      <a class="card g4" href="https://www.xiaohongshu.com/" target="_blank" rel="noopener"><div class="card-icon">📕</div><div class="card-info"><h3>小红书</h3><p>生活方式分享社区</p></div><span class="card-arrow">→</span></a>
+    </div>
+  </div>
+
+  <!-- ===== 4. 公众号 & 内容创作 ===== -->
   <div class="section">
     <div class="section-title"><span class="icon">✍️</span>公众号 · 内容创作</div>
     <div class="cards">
-      <a class="card g1" href="https://mp.weixin.qq.com/cgi-bin/loginpage" target="_blank" rel="noopener">
-        <div class="card-icon">📱</div>
-        <div class="card-info"><h3>微信公众号后台</h3><p>公众号管理与内容发布</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://xiumi.us/#/studio/papers" target="_blank" rel="noopener">
-        <div class="card-icon">🎨</div>
-        <div class="card-info"><h3>秀米</h3><p>公众号排版与 H5 制作</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://www.1ppt.com/" target="_blank" rel="noopener">
-        <div class="card-icon">📊</div>
-        <div class="card-info"><h3>第一 PPT</h3><p>免费 PPT 模板下载</p></div>
-        <span class="card-arrow">→</span>
-      </a>
+      <a class="card g1" href="https://mp.weixin.qq.com/cgi-bin/loginpage" target="_blank" rel="noopener"><div class="card-icon">📱</div><div class="card-info"><h3>微信公众号后台</h3><p>公众号管理与内容发布</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://xiumi.us/#/studio/papers" target="_blank" rel="noopener"><div class="card-icon">🎨</div><div class="card-info"><h3>秀米</h3><p>公众号排版与 H5 制作</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://www.1ppt.com/" target="_blank" rel="noopener"><div class="card-icon">📊</div><div class="card-info"><h3>第一 PPT</h3><p>免费 PPT 模板下载</p></div><span class="card-arrow">→</span></a>
+    </div>
+  </div>
+
+  <!-- ===== 5. 工具 & 实用 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🛠️</span>工具 · 实用</div>
+    <div class="cards">
+      <a class="card g1" href="https://wx.mail.qq.com/" target="_blank" rel="noopener"><div class="card-icon">📧</div><div class="card-info"><h3>QQ 邮箱</h3><p>腾讯邮箱 · 收发邮件</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://www.tboxn.com/sites/2594.html" target="_blank" rel="noopener"><div class="card-icon">📦</div><div class="card-info"><h3>Office Tool Plus</h3><p>Office 部署安装激活工具</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://www.16personalities.com/ch" target="_blank" rel="noopener"><div class="card-icon">🧬</div><div class="card-info"><h3>16Personalities · 人格测试</h3><p>MBTI 免费性格测试</p></div><span class="card-arrow">→</span></a>
+      <a class="card g4" href="https://imgtoformula.com/" target="_blank" rel="noopener"><div class="card-icon">📐</div><div class="card-info"><h3>Miss Formula · 罗马公式</h3><p>图片转 LaTeX 公式工具</p></div><span class="card-arrow">→</span></a>
+    </div>
+  </div>
+
+  <!-- ===== 6. 游戏 & 娱乐 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🎮</span>游戏 · 娱乐</div>
+    <div class="cards">
+      <a class="card g1" href="https://www.steambk.com/?aff=51077" target="_blank" rel="noopener"><div class="card-icon">🎮</div><div class="card-info"><h3>Steam 软件合集</h3><p>Steam 游戏与软件导航</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://byrutgame.org/" target="_blank" rel="noopener"><div class="card-icon">🕹️</div><div class="card-info"><h3>俄罗斯破解游戏</h3><p>免费游戏资源下载</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://poki.com/zh" target="_blank" rel="noopener"><div class="card-icon">🎲</div><div class="card-info"><h3>Poki · 网页小游戏</h3><p>免费在线小游戏合集</p></div><span class="card-arrow">→</span></a>
+      <a class="card g4" href="https://www.tboxn.com/sites/2468.html" target="_blank" rel="noopener"><div class="card-icon">🌻</div><div class="card-info"><h3>植物大战僵尸 · 杂交版</h3><p>经典游戏魔改版下载</p></div><span class="card-arrow">→</span></a>
     </div>
   </div>
 
@@ -484,70 +145,49 @@ body::before {
   <div class="section">
     <div class="section-title"><span class="icon">💻</span>学习 · 开发</div>
     <div class="cards">
-      <a class="card g1" href="https://www.runoob.com/" target="_blank" rel="noopener">
-        <div class="card-icon">📗</div>
-        <div class="card-info"><h3>菜鸟教程</h3><p>编程语言入门教程大全</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://developers.google.cn/machine-learning/crash-course?hl=zh-cn" target="_blank" rel="noopener">
-        <div class="card-icon">🤖</div>
-        <div class="card-info"><h3>Google 机器学习</h3><p>Google ML 速成课程</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://www.ossnav.com/" target="_blank" rel="noopener">
-        <div class="card-icon">⭐</div>
-        <div class="card-info"><h3>开源精选</h3><p>开源项目导航与发现</p></div>
-        <span class="card-arrow">→</span>
-      </a>
+      <a class="card g1" href="https://www.runoob.com/" target="_blank" rel="noopener"><div class="card-icon">📗</div><div class="card-info"><h3>菜鸟教程</h3><p>编程语言入门教程大全</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://developers.google.cn/machine-learning/crash-course?hl=zh-cn" target="_blank" rel="noopener"><div class="card-icon">🤖</div><div class="card-info"><h3>Google 机器学习</h3><p>Google ML 速成课程</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://www.ossnav.com/" target="_blank" rel="noopener"><div class="card-icon">⭐</div><div class="card-info"><h3>开源精选</h3><p>开源项目导航与发现</p></div><span class="card-arrow">→</span></a>
     </div>
   </div>
 
-  <!-- ===== 8. 工具 & 实用 ===== -->
+  <!-- ===== 8. 翻译 & 语言 ===== -->
   <div class="section">
-    <div class="section-title"><span class="icon">🛠️</span>工具 · 实用</div>
+    <div class="section-title"><span class="icon">🔤</span>翻译 · 语言</div>
     <div class="cards">
-      <a class="card g1" href="https://wx.mail.qq.com/" target="_blank" rel="noopener">
-        <div class="card-icon">📧</div>
-        <div class="card-info"><h3>QQ 邮箱</h3><p>腾讯邮箱 · 收发邮件</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://www.tboxn.com/sites/2594.html" target="_blank" rel="noopener">
-        <div class="card-icon">📦</div>
-        <div class="card-info"><h3>Office Tool Plus</h3><p>Office 部署安装激活工具</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://www.16personalities.com/ch" target="_blank" rel="noopener">
-        <div class="card-icon">🧬</div>
-        <div class="card-info"><h3>16Personalities · 人格测试</h3><p>MBTI 免费性格测试</p></div>
-        <span class="card-arrow">→</span>
-      </a>
+      <a class="card g7" href="https://www.deepl.com/zh/translator" target="_blank" rel="noopener"><div class="card-icon">🌍</div><div class="card-info"><h3>DeepL 翻译</h3><p>全球最精准的 AI 翻译器</p></div><span class="card-arrow">→</span></a>
+      <a class="card g8" href="https://dict.cnki.net/" target="_blank" rel="noopener"><div class="card-icon">📖</div><div class="card-info"><h3>CNKI 翻译助手</h3><p>学术文献专业翻译工具</p></div><span class="card-arrow">→</span></a>
     </div>
   </div>
 
-  <!-- ===== 9. 游戏 & 娱乐 ===== -->
+  <!-- ===== 9. 学术资源 ===== -->
   <div class="section">
-    <div class="section-title"><span class="icon">🎮</span>游戏 · 娱乐</div>
+    <div class="section-title"><span class="icon">📚</span>学术资源</div>
     <div class="cards">
-      <a class="card g1" href="https://www.steambk.com/?aff=51077" target="_blank" rel="noopener">
-        <div class="card-icon">🎮</div>
-        <div class="card-info"><h3>Steam 软件合集</h3><p>Steam 游戏与软件导航</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g2" href="https://byrutgame.org/" target="_blank" rel="noopener">
-        <div class="card-icon">🕹️</div>
-        <div class="card-info"><h3>俄罗斯破解游戏</h3><p>免费游戏资源下载</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g3" href="https://poki.com/zh" target="_blank" rel="noopener">
-        <div class="card-icon">🎲</div>
-        <div class="card-info"><h3>Poki · 网页小游戏</h3><p>免费在线小游戏合集</p></div>
-        <span class="card-arrow">→</span>
-      </a>
-      <a class="card g4" href="https://www.tboxn.com/sites/2468.html" target="_blank" rel="noopener">
-        <div class="card-icon">🌻</div>
-        <div class="card-info"><h3>植物大战僵尸 · 杂交版</h3><p>经典游戏魔改版下载</p></div>
-        <span class="card-arrow">→</span>
-      </a>
+      <a class="card g1" href="https://www.cnki.net/" target="_blank" rel="noopener"><div class="card-icon">📘</div><div class="card-info"><h3>中国知网 · CNKI</h3><p>中文学术文献检索与下载</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://x.cnki.net/web/psmc/#/home" target="_blank" rel="noopener"><div class="card-icon">🔬</div><div class="card-info"><h3>知网研学</h3><p>文献阅读 · 笔记 · 知识管理</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://scholar.chongbuluo.com/" target="_blank" rel="noopener"><div class="card-icon">🔎</div><div class="card-info"><h3>学术搜索 · 虫部落</h3><p>聚合 Google Scholar 等引擎</p></div><span class="card-arrow">→</span></a>
+      <a class="card g4" href="https://tradesou.99lb.net/" target="_blank" rel="noopener"><div class="card-icon">🧪</div><div class="card-info"><h3>谷粉学术</h3><p>Google 学术镜像导航</p></div><span class="card-arrow">→</span></a>
+      <a class="card g5" href="http://459.org/" target="_blank" rel="noopener"><div class="card-icon">📄</div><div class="card-info"><h3>文献部落</h3><p>文献下载聚合导航</p></div><span class="card-arrow">→</span></a>
+      <a class="card g6" href="https://www.aminer.cn/" target="_blank" rel="noopener"><div class="card-icon">🧠</div><div class="card-info"><h3>AMiner</h3><p>AI 学术搜索 · 学者画像</p></div><span class="card-arrow">→</span></a>
+      <a class="card g7" href="https://sso.hnlat.com/login?service=https%3A%2F%2Fspis.hnlat.com%2FloginCenter%3Fsourceurl%3Dhttps%253A%252F%252Fspis.hnlat.com%252F" target="_blank" rel="noopener"><div class="card-icon">📊</div><div class="card-info"><h3>维度学术</h3><p>学术期刊投稿与检索</p></div><span class="card-arrow">→</span></a>
+      <a class="card g8" href="https://www.scihub.net.cn/" target="_blank" rel="noopener"><div class="card-icon">🔓</div><div class="card-info"><h3>SCI 学术</h3><p>SCI 论文检索与下载</p></div><span class="card-arrow">→</span></a>
+      <a class="card g1" href="https://www.yanweb.top/" target="_blank" rel="noopener"><div class="card-icon">💻</div><div class="card-info"><h3>科研废物网</h3><p>科研工具与资源聚合</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://www.letpub.com.cn/" target="_blank" rel="noopener"><div class="card-icon">📝</div><div class="card-info"><h3>LetPub</h3><p>SCI 论文编辑 · 期刊投稿</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://z-lib.ggonav.com/" target="_blank" rel="noopener"><div class="card-icon">📥</div><div class="card-info"><h3>Z-Library 国内镜像</h3><p>全球免费电子书图书馆</p></div><span class="card-arrow">→</span></a>
+      <a class="card g4" href="https://www.giffox.com/" target="_blank" rel="noopener"><div class="card-icon">🦊</div><div class="card-info"><h3>Giffox 电子书搜索</h3><p>多源电子书搜索引擎</p></div><span class="card-arrow">→</span></a>
+    </div>
+  </div>
+
+  <!-- ===== 10. 考公专区 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>考公专区</div>
+    <div class="cards">
+      <a class="card g1" href="https://saduck.top" target="_blank" rel="noopener"><div class="card-icon">🦆</div><div class="card-info"><h3>SaDuck · 公考知识库</h3><p>公务员考试备考资料</p></div><span class="card-arrow">→</span></a>
+      <a class="card g2" href="https://docs.qq.com/sheet/DUmdiZ0tuQ2Z1VXVo?tab=BB08J2&_t=1745842941249&nlc=1&u=414da1cec56e4077bf92036874e34df4" target="_blank" rel="noopener"><div class="card-icon">📋</div><div class="card-info"><h3>公考资料 · 腾讯文档</h3><p>公考备考资料在线表格</p></div><span class="card-arrow">→</span></a>
+      <a class="card g3" href="https://gwy.gkzhenti.cn/" target="_blank" rel="noopener"><div class="card-icon">📝</div><div class="card-info"><h3>公考真题</h3><p>公务员考试历年真题库</p></div><span class="card-arrow">→</span></a>
+      <a class="card g4" href="https://bbs.qzzn.com/" target="_blank" rel="noopener"><div class="card-icon">💬</div><div class="card-info"><h3>QZZN 公考论坛</h3><p>公务员考试经验交流社区</p></div><span class="card-arrow">→</span></a>
+      <a class="card g5" href="https://flowus.cn/mmjz/share/5a64b856-fc22-4e31-be66-99a14db819d6" target="_blank" rel="noopener"><div class="card-icon">📚</div><div class="card-info"><h3>公考笔记 · FlowUs</h3><p>公务员考试知识笔记共享</p></div><span class="card-arrow">→</span></a>
     </div>
   </div>
 
@@ -558,40 +198,11 @@ body::before {
 </footer>
 
 <script>
-function updateClock() {
-  const now = new Date();
-  const opts = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-  document.getElementById('clock').textContent = now.toLocaleString('zh-CN', opts);
-}
-updateClock();
-setInterval(updateClock, 1000);
-document.getElementById('year').textContent = new Date().getFullYear();
-
-const input = document.getElementById('searchInput');
-input.addEventListener('input', () => {
-  const q = input.value.toLowerCase().trim();
-  document.querySelectorAll('.card').forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.classList.toggle('hidden', q && !text.includes(q));
-  });
-  document.querySelectorAll('.section').forEach(sec => {
-    const visibleCards = sec.querySelectorAll('.card:not(.hidden)');
-    sec.style.display = visibleCards.length === 0 && q ? 'none' : '';
-  });
-});
-
-document.addEventListener('keydown', e => {
-  if (e.key === '/' && document.activeElement !== input) {
-    e.preventDefault();
-    input.focus();
-  }
-  if (e.key === 'Escape') {
-    input.value = '';
-    input.dispatchEvent(new Event('input'));
-    input.blur();
-  }
-});
+function updateClock(){const n=new Date();document.getElementById('clock').textContent=n.toLocaleString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false})}
+updateClock();setInterval(updateClock,1000);document.getElementById('year').textContent=new Date().getFullYear();
+const input=document.getElementById('searchInput');
+input.addEventListener('input',()=>{const q=input.value.toLowerCase().trim();document.querySelectorAll('.card').forEach(c=>{c.classList.toggle('hidden',q&&!c.textContent.toLowerCase().includes(q))});document.querySelectorAll('.section').forEach(s=>{s.style.display=s.querySelectorAll('.card:not(.hidden)').length===0&&q?'none':''})});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement!==input){e.preventDefault();input.focus()}if(e.key==='Escape'){input.value='';input.dispatchEvent(new Event('input'));input.blur()}});
 </script>
-
 </body>
 </html>
